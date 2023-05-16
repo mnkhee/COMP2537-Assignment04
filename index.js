@@ -68,6 +68,7 @@ const setup = async () => {
     });
 
     $('#start').on('click', function () {
+        $('#game_grid').css('display', 'flex');
         startTimer();
       });
 
@@ -98,4 +99,5 @@ const setup = async () => {
    *    - Change the size of the game grid according the the difficulty
    * - Add a button to start the game
    * - Add a button to reset the game
+   * - Randomize placement of pokemon images
    */

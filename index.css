@@ -12,6 +12,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 10px;
+    display: none;
   }
   
   /* EASY: 6x4, MEDIUM: 8x6, HARD: 12x8 */
