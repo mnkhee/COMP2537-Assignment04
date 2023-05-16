@@ -1,3 +1,8 @@
+let pokemonList = [];
+let EASY = 3;
+let MEDIUM = 6;
+let HARD = 12;
+  
   function shuffleImage(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -7,13 +12,14 @@
 
 const setup = async () => {
     let response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
+    let gridHTML = '';
     pokemonList = response.data.results;
     
     shuffleImage(pokemonList);
     
-    let gridHTML = '';
-    
-    for (let i = 0; i < 3; i++) {
+    $('#total').html(EASY);
+
+    for (let i = 0; i < EASY; i++) {
       const pokemon = pokemonList[i];
       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
       const pokeSprite = res.data.sprites.other['official-artwork'].front_default;
