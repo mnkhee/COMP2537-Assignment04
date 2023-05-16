@@ -2,13 +2,26 @@ let pokemonList = [];
 let EASY = 3;
 let MEDIUM = 6;
 let HARD = 12;
-  
-  function shuffleImage(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
+let timerInterval;
+let seconds = 0;
+
+function shuffleImage(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
+}
+
+const startTimer = () => {
+  timerInterval = setInterval(() => {
+    seconds++;
+    $('#time').html(seconds);
+  }, 1000);
+};
+
+const stopTimer = () => {
+  clearInterval(timerInterval);
+};
 
 const setup = async () => {
     let response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
@@ -36,6 +49,16 @@ const setup = async () => {
     }
     
     $('#game_grid').html(gridHTML);
+
+    $('#start').on('click', function () {
+        startTimer();
+      });
+
+    $('#reset').on('click', function () {
+        stopTimer();
+        seconds = 0;
+        $('#time').html(seconds);
+      });
 
     $('#dark').on('click', function () {
         $('#game_grid').css('background-color', 'black');
