@@ -50,6 +50,23 @@ const setup = async () => {
     
     $('#game_grid').html(gridHTML);
 
+     /* EASY: 6x4, MEDIUM: 8x6, HARD: 12x8 */
+
+    $('#option1').on('click', function () {
+        $('#game_grid').css('width', '600px');
+        $('#game_grid').css('height', '400px');
+    });
+
+    $('#option2').on('click', function () {
+        $('#game_grid').css('width', '800');
+        $('#game_grid').css('height', '600px');
+    });
+    
+    $('#option3').on('click', function () {
+        $('#game_grid').css('width', '1200px');
+        $('#game_grid').css('height', '800px');
+    });
+
     $('#start').on('click', function () {
         startTimer();
       });
