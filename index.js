@@ -17,6 +17,15 @@ const startTimer = () => {
     seconds++;
     $('#time').html(seconds);
   }, 1000);
+
+  /**
+   * have somethign that checks what difficulty is selected
+   * if ... timelimit === ...
+   * 
+   * if (seconds === (timelimit)) {
+   * alert('out of time');
+   * } 
+  */
 };
 
 const stopTimer = () => {
