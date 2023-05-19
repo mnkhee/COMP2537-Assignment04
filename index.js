@@ -129,9 +129,5 @@ $(document).ready(setup);
  * TODO: 
  * - Add a tracker for how many clicks it took to finish the game
  * - Add a tracker for how many pairs were found / how many remain
- * - Check if user has clicked on easy, medium, or hard, then load the appropriate number of pokemon.
- *    - Change the size of the game grid according the the difficulty
- * - Add a button to start the game
- * - Add a button to reset the game
- * - Randomize placement of pokemon images
+ * - Randomize placement of pokemon images (think of an algorithm to do this)
  */
