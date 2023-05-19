@@ -36,47 +36,31 @@ const setup = async () => {
   let response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
   let gridHTML = '';
   let difficulty;
+  const options = [
+    { value: 'EASY', width: '600px', height: '400px' },
+    { value: 'MEDIUM', width: '800px', height: '600px' },
+    { value: 'HARD', width: '1200px', height: '800px' }
+  ];
 
   pokemonList = response.data.results;
 
   // Shuffles the pokemon images so that different pokemon appear each time.
   shuffleImage(pokemonList);
 
-  $('#option1').on('click', function () {
-    gridHTML = '';
-    stopTimer();
-    seconds = 0;
-    $('#time').html(seconds);
-    $('#game_grid').css('display', 'none');
-    $('#game_grid').css('width', '600px');
-    $('#game_grid').css('height', '400px');
-    difficulty = 'EASY';
-    updateTotal(difficulty); // Call a separate function to update the total
-  });
-
-  $('#option2').on('click', function () {
-    gridHTML = '';
-    stopTimer();
-    seconds = 0;
-    $('#time').html(seconds);
-    $('#game_grid').css('display', 'none');
-    $('#game_grid').css('width', '800');
-    $('#game_grid').css('height', '600px');
-    difficulty = 'MEDIUM';
-    updateTotal(difficulty); // Call a separate function to update the total
-  });
-
-  $('#option3').on('click', function () {
-    gridHTML = '';
-    stopTimer();
-    seconds = 0;
-    $('#time').html(seconds);
-    $('#game_grid').css('display', 'none');
-    $('#game_grid').css('width', '1200px');
-    $('#game_grid').css('height', '800px');
-    difficulty = 'HARD';
-    updateTotal(difficulty); // Call a separate function to update the total
-  });
+  for (let i = 0; i < options.length; i++) {
+    const option = options[i];
+    $(`#option${i + 1}`).on('click', function () {
+      gridHTML = '';
+      stopTimer();
+      seconds = 0;
+      $('#time').html(seconds);
+      $('#game_grid').css('display', 'none');
+      $('#game_grid').css('width', option.width);
+      $('#game_grid').css('height', option.height);
+      difficulty = option.value;
+      updateTotal(difficulty); // Call a separate function to update the total
+    });
+  }
 
   $('#start').on('click', function () {
     $('#game_grid').css('display', 'flex');
