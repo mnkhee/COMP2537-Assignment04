@@ -50,8 +50,6 @@ const setup = async () => {
     
     $('#game_grid').html(gridHTML);
 
-     /* EASY: 6x4, MEDIUM: 8x6, HARD: 12x8 */
-
     $('#option1').on('click', function () {
         $('#game_grid').css('width', '600px');
         $('#game_grid').css('height', '400px');
@@ -92,7 +90,6 @@ const setup = async () => {
 
   /**
    * TODO: 
-   * - Add a timer
    * - Add a tracker for how many clicks it took to finish the game
    * - Add a tracker for how many pairs were found / how many remain
    * - Check if user has clicked on easy, medium, or hard, then load the appropriate number of pokemon.
