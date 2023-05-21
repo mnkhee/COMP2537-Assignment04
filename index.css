@@ -2,7 +2,6 @@ body {
   margin: 0px;
 }
 
-
 #game_grid {
   box-sizing: content-box;
   border: 2px tomato solid;
@@ -14,9 +13,6 @@ body {
   margin-bottom: 10px;
   display: none;
 }
-
-/* EASY: 6x4, MEDIUM: 8x6, HARD: 12x8 */
-
 
 .pokeCard {
   width: 200px;
@@ -62,13 +58,14 @@ header {
   display: none;
 }
 
-/* .card {
+.card {
   perspective: 1000px;
   width: 200px;
   height: 200px;
+  outline: none;
 }
 
-.card-inner {
+ .card-inner {
   position: relative;
   width: 100%;
   height: 100%;
@@ -92,4 +89,12 @@ header {
 
 .card-back {
   transform: rotateY(180deg);
-} */
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: none;
+  outline: none;
+} 

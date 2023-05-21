@@ -114,19 +114,31 @@ const setup = async () => {
       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
       const pokemonImage = res.data.sprites.other['official-artwork'].front_default;
       const pokeballImage = '/Pokeball.png';
-      // might have to consider making some of these global 
+
+      const pokemonId = pokemon.name; // Get the ID of the Pokémon
 
       gridHTML += `
-      <div id="${pokemon.name}">
-        <div style="width: 200px">
-          <img src="${pokemonImage}"/>
+      <div class="card" id="${pokemonId}">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="${pokeballImage}"/>
+          </div>
+          <div class="card-back">
+            <img src="${pokemonImage}"/>
+          </div>
         </div>
       </div>
-    `;
+      `;
     }
 
     $('#game_grid').html(gridHTML);
+
+    // Add event listener for card click
+    $('.card').on('click', function () {
+      $(this).toggleClass('is-flipped');
+    });
   }
+
 
   function getDifficultyCount(difficulty) {
     switch (difficulty) {
