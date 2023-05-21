@@ -119,7 +119,6 @@ const setup = async () => {
       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
       const pokemonImage = res.data.sprites.other['official-artwork'].front_default;
       const pokeballImage = '/Pokeball.png';
-
       const pokemonId = pokemon.name; // Get the ID of the Pokémon
 
       gridHTML += `
@@ -141,14 +140,17 @@ const setup = async () => {
     $('.pokeCard').on('click', function () {
       const clickedCard = $(this);
       const cardId = clickedCard.attr('id');
-      click++;
-      $('#clicks').html(click);
 
-      if (!isClickable) {
-        return;
+      if (!isClickable || clickedCard.hasClass('is-flipped') || clickedCard.hasClass('locked')) {
+        return; 
+      } else {
+        click++;
+        $('#clicks').html(click);
       }
 
       clickedCard.addClass('is-flipped');
+      clickedCard.addClass('locked'); 
+
       openCards.push({ cardId, element: clickedCard });
 
       if (openCards.length === 2) {
@@ -173,6 +175,8 @@ const setup = async () => {
           setTimeout(() => {
             card1.element.removeClass('is-flipped');
             card2.element.removeClass('is-flipped');
+            card1.element.removeClass('locked'); // Unlock the card
+            card2.element.removeClass('locked'); // Unlock the card
             openCards = [];
             isClickable = true;
           }, 1000);
