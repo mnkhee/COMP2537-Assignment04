@@ -7,6 +7,7 @@ let seconds = 0;
 let difficulty;
 let openCards = [];
 let click = 0;
+let matches = 0;
 const options = [
   { value: 'EASY', width: '600px', height: '400px', timeLimit: 100 },
   { value: 'MEDIUM', width: '800px', height: '600px', timeLimit: 200 },
@@ -76,6 +77,7 @@ const setup = async () => {
   }
 
   $('#start').on('click', function () {
+    updateTotal(difficulty);
     generateGrid(difficulty);
     $('#game_grid').css('display', 'flex');
     $('#info').css('display', 'block');
@@ -105,8 +107,10 @@ const setup = async () => {
 
   async function generateGrid(difficulty) {
     const selectedPokemonList = pokemonList.slice(0, getDifficultyCount(difficulty));
-    let isClickable = true;
     const duplicatedPokemonList = [...selectedPokemonList, ...selectedPokemonList];
+    const difficultyValue = getDifficultyCount(difficulty);
+    let remainingCards = difficultyValue - matches;
+    let isClickable = true;
 
     shuffleImage(duplicatedPokemonList);
 
@@ -154,6 +158,17 @@ const setup = async () => {
         if (card1.cardId === card2.cardId) {
           isClickable = true;
           openCards = [];
+          matches++;
+          $('#matches').html(matches);
+          $('#left').html(remainingCards - matches);
+
+          if (matches === difficultyValue) {
+            setTimeout(() => {
+              stopTimer();
+              clearGameBoard();
+              alert('You win!');
+            }, 500);
+          }
         } else {
           setTimeout(() => {
             card1.element.removeClass('is-flipped');
