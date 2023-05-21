@@ -118,7 +118,7 @@ const setup = async () => {
       const pokemonId = pokemon.name; // Get the ID of the Pokémon
 
       gridHTML += `
-      <div class="card" id="${pokemonId}">
+      <div class="pokeCard" id="${pokemonId}">
         <div class="card-inner">
           <div class="card-front">
             <img src="${pokeballImage}"/>
@@ -134,7 +134,7 @@ const setup = async () => {
     $('#game_grid').html(gridHTML);
 
     // Add event listener for card click
-    $('.card').on('click', function () {
+    $('.pokeCard').on('click', function () {
       $(this).toggleClass('is-flipped');
     });
   }
