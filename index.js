@@ -4,6 +4,12 @@ let MEDIUM = 6;
 let HARD = 12;
 let timerInterval;
 let seconds = 0;
+let difficulty;
+const options = [
+  { value: 'EASY', width: '600px', height: '400px', timeLimit: 100 },
+  { value: 'MEDIUM', width: '800px', height: '600px', timeLimit: 200 },
+  { value: 'HARD', width: '1200px', height: '800px', timeLimit: 300 }
+];
 
 function shuffleImage(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -17,7 +23,7 @@ function getTimeLimit() {
   if (selectedOption) {
     return selectedOption.timeLimit;
   }
-  return 3;
+  return 100;
 }
 
 function clearGameBoard() {
@@ -31,7 +37,7 @@ const startTimer = () => {
     $('#time').html(seconds);
 
     // Check if time limit reached
-    const timeLimit = 3;
+    const timeLimit = getTimeLimit();
     $('#timer').html(timeLimit);
     if (seconds === timeLimit) {
       alert('Out of time!');
@@ -47,12 +53,6 @@ const stopTimer = () => {
 const setup = async () => {
   let response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
   let gridHTML = '';
-  let difficulty = 'EASY';
-  const options = [
-    { value: 'EASY', width: '600px', height: '400px', timeLimit: 3 },
-    { value: 'MEDIUM', width: '800px', height: '600px', timeLimit: 200 },
-    { value: 'HARD', width: '1200px', height: '800px', timeLimit: 300 }
-  ];
 
   pokemonList = response.data.results;
 
