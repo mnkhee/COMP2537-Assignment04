@@ -63,7 +63,8 @@ const setup = async () => {
 
   for (let i = 0; i < options.length; i++) {
     const option = options[i];
-    $(`#option${i + 1}`).on('click', function () {
+    $(`#option${i + 1}`).on('click', async function () {
+      console.log('234')
       gridHTML = '';
       stopTimer();
       seconds = 0;
