@@ -6,6 +6,7 @@ let timerInterval;
 let seconds = 0;
 let difficulty;
 let openCards = [];
+let click = 0;
 const options = [
   { value: 'EASY', width: '600px', height: '400px', timeLimit: 100 },
   { value: 'MEDIUM', width: '800px', height: '600px', timeLimit: 200 },
@@ -133,13 +134,14 @@ const setup = async () => {
 
     $('#game_grid').html(gridHTML);
 
-    // Add event listener for card click
     $('.pokeCard').on('click', function () {
       const clickedCard = $(this);
       const cardId = clickedCard.attr('id');
+      click++;
+      $('#clicks').html(click);
 
       if (!isClickable) {
-        return; // Ignore click if not clickable
+        return;
       }
 
       clickedCard.addClass('is-flipped');
@@ -153,7 +155,6 @@ const setup = async () => {
           isClickable = true;
           openCards = [];
         } else {
-          // Cards don't match, flip them back
           setTimeout(() => {
             card1.element.removeClass('is-flipped');
             card2.element.removeClass('is-flipped');
