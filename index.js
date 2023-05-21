@@ -5,6 +5,7 @@ let HARD = 12;
 let timerInterval;
 let seconds = 0;
 let difficulty;
+let openCards = [];
 const options = [
   { value: 'EASY', width: '600px', height: '400px', timeLimit: 100 },
   { value: 'MEDIUM', width: '800px', height: '600px', timeLimit: 200 },
@@ -102,10 +103,8 @@ const setup = async () => {
   }
 
   async function generateGrid(difficulty) {
-    let openCards = [];
     const selectedPokemonList = pokemonList.slice(0, getDifficultyCount(difficulty));
-
-    // Duplicate the selected Pokémon list
+    let isClickable = true;
     const duplicatedPokemonList = [...selectedPokemonList, ...selectedPokemonList];
 
     shuffleImage(duplicatedPokemonList);
@@ -139,14 +138,19 @@ const setup = async () => {
       const clickedCard = $(this);
       const cardId = clickedCard.attr('id');
 
+      if (!isClickable) {
+        return; // Ignore click if not clickable
+      }
+
       clickedCard.addClass('is-flipped');
       openCards.push({ cardId, element: clickedCard });
 
       if (openCards.length === 2) {
+        isClickable = false;
         const [card1, card2] = openCards;
 
         if (card1.cardId === card2.cardId) {
-          // Cards match, keep them open
+          isClickable = true;
           openCards = [];
         } else {
           // Cards don't match, flip them back
@@ -154,6 +158,7 @@ const setup = async () => {
             card1.element.removeClass('is-flipped');
             card2.element.removeClass('is-flipped');
             openCards = [];
+            isClickable = true;
           }, 1000);
         }
       }
