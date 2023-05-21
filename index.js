@@ -102,6 +102,7 @@ const setup = async () => {
   }
 
   async function generateGrid(difficulty) {
+    let openCards = [];
     const selectedPokemonList = pokemonList.slice(0, getDifficultyCount(difficulty));
 
     // Duplicate the selected Pokémon list
@@ -135,7 +136,27 @@ const setup = async () => {
 
     // Add event listener for card click
     $('.pokeCard').on('click', function () {
-      $(this).toggleClass('is-flipped');
+      const clickedCard = $(this);
+      const cardId = clickedCard.attr('id');
+
+      clickedCard.addClass('is-flipped');
+      openCards.push({ cardId, element: clickedCard });
+
+      if (openCards.length === 2) {
+        const [card1, card2] = openCards;
+
+        if (card1.cardId === card2.cardId) {
+          // Cards match, keep them open
+          openCards = [];
+        } else {
+          // Cards don't match, flip them back
+          setTimeout(() => {
+            card1.element.removeClass('is-flipped');
+            card2.element.removeClass('is-flipped');
+            openCards = [];
+          }, 1000);
+        }
+      }
     });
   }
 
