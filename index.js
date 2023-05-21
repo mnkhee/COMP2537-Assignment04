@@ -62,6 +62,7 @@ const setup = async () => {
   }
 
   $('#start').on('click', function () {
+    generateGrid(difficulty);
     $('#game_grid').css('display', 'flex');
     $('#info').css('display', 'block');
     $('#themes').css('display', 'block');
@@ -85,7 +86,6 @@ const setup = async () => {
   function updateTotal(difficulty) {
     const difficultyValue = getDifficultyCount(difficulty);
     $('#total').html(difficultyValue);
-    generateGrid(difficulty);
   }
 
   async function generateGrid(difficulty) {
