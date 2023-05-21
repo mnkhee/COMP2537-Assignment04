@@ -12,20 +12,32 @@ function shuffleImage(arr) {
   }
 }
 
+function getTimeLimit() {
+  const selectedOption = options.find(option => option.value === difficulty);
+  if (selectedOption) {
+    return selectedOption.timeLimit;
+  }
+  return 3;
+}
+
+function clearGameBoard() {
+  stopTimer();
+  $('#time').html(seconds);
+}
+
 const startTimer = () => {
   timerInterval = setInterval(() => {
     seconds++;
     $('#time').html(seconds);
-  }, 1000);
 
-  /**
-   * have somethign that checks what difficulty is selected
-   * if ... timelimit === ...
-   * 
-   * if (seconds === (timelimit)) {
-   * alert('out of time');
-   * } 
-  */
+    // Check if time limit reached
+    const timeLimit = 3;
+    $('#timer').html(timeLimit);
+    if (seconds === timeLimit) {
+      alert('Out of time!');
+      clearGameBoard();
+    }
+  }, 1000);
 };
 
 const stopTimer = () => {
@@ -37,9 +49,9 @@ const setup = async () => {
   let gridHTML = '';
   let difficulty = 'EASY';
   const options = [
-    { value: 'EASY', width: '600px', height: '400px' },
-    { value: 'MEDIUM', width: '800px', height: '600px' },
-    { value: 'HARD', width: '1200px', height: '800px' }
+    { value: 'EASY', width: '600px', height: '400px', timeLimit: 3 },
+    { value: 'MEDIUM', width: '800px', height: '600px', timeLimit: 200 },
+    { value: 'HARD', width: '1200px', height: '800px', timeLimit: 300 }
   ];
 
   pokemonList = response.data.results;
@@ -57,7 +69,7 @@ const setup = async () => {
       $('#game_grid').css('width', option.width);
       $('#game_grid').css('height', option.height);
       difficulty = option.value;
-      updateTotal(difficulty); 
+      updateTotal(difficulty);
     });
   }
 
@@ -66,6 +78,7 @@ const setup = async () => {
     $('#game_grid').css('display', 'flex');
     $('#info').css('display', 'block');
     $('#themes').css('display', 'block');
+    $('#start').css('display', 'none');
     startTimer();
   });
 
@@ -91,20 +104,22 @@ const setup = async () => {
   async function generateGrid(difficulty) {
     const selectedPokemonList = pokemonList.slice(0, getDifficultyCount(difficulty));
 
-    for (let i = 0; i < selectedPokemonList.length; i++) {
-      const pokemon = selectedPokemonList[i];
+    // Duplicate the selected Pokémon list
+    const duplicatedPokemonList = [...selectedPokemonList, ...selectedPokemonList];
+
+    shuffleImage(duplicatedPokemonList);
+
+    for (let i = 0; i < duplicatedPokemonList.length; i++) {
+      const pokemon = duplicatedPokemonList[i];
       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
       const pokemonImage = res.data.sprites.other['official-artwork'].front_default;
       const pokeballImage = '/Pokeball.png';
 
       gridHTML += `
-        <div style="width: 200px">
-          <img src="${pokemonImage}"/>
-        </div>
-        <div style="width: 200px">
-          <img src="${pokemonImage}"/>
-        </div>
-      `;
+      <div style="width: 200px">
+        <img src="${pokemonImage}"/>
+      </div>
+    `;
     }
 
     $('#game_grid').html(gridHTML);
@@ -125,6 +140,7 @@ const setup = async () => {
 };
 
 $(document).ready(setup);
+
 
 
 /**
