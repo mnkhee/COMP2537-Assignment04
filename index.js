@@ -183,6 +183,18 @@ const setup = async () => {
         }
       }
     });
+    const flipAllCards = () => {
+      alert('Power Up!');
+      const unflippedCards = $('.pokeCard').not('.is-flipped');
+      unflippedCards.addClass('is-flipped');
+
+      setTimeout(() => {
+        unflippedCards.removeClass('is-flipped');
+      }, 1000);
+    };
+
+    const flipInterval = Math.random() * 40000 + 10000; // Random number between 10 and 100 seconds
+    setInterval(flipAllCards, flipInterval);
   }
 
 
