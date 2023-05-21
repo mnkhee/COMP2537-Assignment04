@@ -114,10 +114,13 @@ const setup = async () => {
       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
       const pokemonImage = res.data.sprites.other['official-artwork'].front_default;
       const pokeballImage = '/Pokeball.png';
+      // might have to consider making some of these global 
 
       gridHTML += `
-      <div style="width: 200px">
-        <img src="${pokemonImage}"/>
+      <div id="${pokemon.name}">
+        <div style="width: 200px">
+          <img src="${pokemonImage}"/>
+        </div>
       </div>
     `;
     }
