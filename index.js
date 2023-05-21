@@ -35,7 +35,7 @@ const stopTimer = () => {
 const setup = async () => {
   let response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
   let gridHTML = '';
-  let difficulty;
+  let difficulty = 'EASY';
   const options = [
     { value: 'EASY', width: '600px', height: '400px' },
     { value: 'MEDIUM', width: '800px', height: '600px' },
@@ -44,7 +44,6 @@ const setup = async () => {
 
   pokemonList = response.data.results;
 
-  // Shuffles the pokemon images so that different pokemon appear each time.
   shuffleImage(pokemonList);
 
   for (let i = 0; i < options.length; i++) {
@@ -58,12 +57,14 @@ const setup = async () => {
       $('#game_grid').css('width', option.width);
       $('#game_grid').css('height', option.height);
       difficulty = option.value;
-      updateTotal(difficulty); // Call a separate function to update the total
+      updateTotal(difficulty); 
     });
   }
 
   $('#start').on('click', function () {
     $('#game_grid').css('display', 'flex');
+    $('#info').css('display', 'block');
+    $('#themes').css('display', 'block');
     startTimer();
   });
 
@@ -94,13 +95,14 @@ const setup = async () => {
       const pokemon = selectedPokemonList[i];
       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
       const pokemonImage = res.data.sprites.other['official-artwork'].front_default;
+      const pokeballImage = '/Pokeball.png';
 
       gridHTML += `
         <div style="width: 200px">
-          <img src="${pokemonImage}" alt="${pokemon.name}"/>
+          <img src="${pokemonImage}"/>
         </div>
         <div style="width: 200px">
-          <img src="${pokemonImage}" alt="${pokemon.name}"/>
+          <img src="${pokemonImage}"/>
         </div>
       `;
     }
