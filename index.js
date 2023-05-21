@@ -201,12 +201,3 @@ const setup = async () => {
 };
 
 $(document).ready(setup);
-
-
-
-/**
- * TODO: 
- * - Add a tracker for how many clicks it took to finish the game
- * - Add a tracker for how many pairs were found / how many remain
- * - Randomize placement of pokemon images (think of an algorithm to do this)
- */
