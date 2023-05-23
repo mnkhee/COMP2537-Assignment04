@@ -64,7 +64,6 @@ const setup = async () => {
   for (let i = 0; i < options.length; i++) {
     const option = options[i];
     $(`#option${i + 1}`).on('click', async function () {
-      console.log('234')
       gridHTML = '';
       stopTimer();
       seconds = 0;
@@ -176,8 +175,8 @@ const setup = async () => {
           setTimeout(() => {
             card1.element.removeClass('is-flipped');
             card2.element.removeClass('is-flipped');
-            card1.element.removeClass('locked'); // Unlock the card
-            card2.element.removeClass('locked'); // Unlock the card
+            card1.element.removeClass('locked'); 
+            card2.element.removeClass('locked');
             openCards = [];
             isClickable = true;
           }, 1000);
